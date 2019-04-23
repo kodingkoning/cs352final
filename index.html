@@ -12,9 +12,11 @@
 		<script src="js/three.js"></script>
 		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 		<script src="models/car.js"></script>
+		<script src="models/frog.js"></script>
+		<script src="models/log.js"></script>
 		<script>
 
-		// initial backround from example at https://threejs.org/examples/#webgl_animation_cloth
+		// initial background from example at https://threejs.org/examples/#webgl_animation_cloth
 
 		var renderer, scene;
 		var cube;
@@ -60,12 +62,9 @@
 			mesh.receiveShadow = true;
 			scene.add( mesh );
 
-			var geo = new THREE.BoxGeometry(1, 1, 1);
-			var mat = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			cube = new THREE.Mesh( geo, mat );
-			scene.add( cube );
-
-			var car1 = new Car(scene, 500, 0, 0);
+			var car = new Car(scene, 500, 0, 0);
+			var frog = new Frog(scene, 550, 0, 40);
+			var log = new Log(scene, 450, 0, 20);
 
 			// controls
 			var controls = new THREE.OrbitControls( camera, renderer.domElement );
