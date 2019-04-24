@@ -21,6 +21,7 @@
 
 		var renderer, scene;
 		var cube;
+		var frog;
 
 		function init() {
       scene = new THREE.Scene();
@@ -65,14 +66,15 @@
 			mesh.receiveShadow = true;
 			scene.add( mesh );
 
-			var car = new Car(scene, 500, 0, 0);
-			var frog = new Frog(scene, 550, 0, 40);
+			var car = new Car(scene, 20, 0, -250);
+			// frog = new Frog(scene, 0, 0, 0);
+			frog = new Frog(scene, 550, 0, 40);
 			var log = new Log(scene, 450, 0, 20);
 
 			// controls
 			var controls = new THREE.OrbitControls( camera, renderer.domElement );
 			controls.maxPolarAngle = Math.PI * 0.497;
-			controls.minDistance = 1000;
+			controls.minDistance = 500;
 			controls.maxDistance = 5000;
 
 			window.addEventListener( 'resize', onWindowResize, false );
@@ -87,6 +89,11 @@
 		function animate() {
 			requestAnimationFrame( animate );
 			renderer.render( scene, camera );
+
+			// frog movement for testing purposes
+			// TODO: remove for actual gameplay
+			frog.setRotation(Date.now()*.002);
+			frog.moveBy(0, 1, 0);
 		};
 
 		init();
