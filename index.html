@@ -22,9 +22,22 @@
 		var renderer, scene;
 		var cube;
 		var frog;
+		var slowCar1, slowCar2, slowCar3, slowCar4, slowCar5, slowCar6;
+		var oppNormCar1, oppNormCar2, oppNormCar3, oppNormCar4;
+		var oppSlowCar1, oppSlowCar2, oppSlowCar3, oppSlowCar4, oppSlowCar5, oppSlowCar6;
+		var fastCar1, fastCar2;
+		var slowLog1, slowLog2, slowLog3, slowLog4;
+		var oppNormLog1, oppNormLog2, oppNormLog3;
+		var fastLog1, fastLog2;
+		var moveDistanceXSlow = 1;
+		var moveOppDistanceXSlow = -moveDistanceXSlow;
+		var moveDistanceXNorm = 2;
+		var moveOppDistanceXNorm = -moveDistanceXNorm;
+		var moveDistanceXFast = 3;
+		var moveOppDistanceXFast = -moveDistanceXFast;
 
 		function init() {
-      scene = new THREE.Scene();
+      		scene = new THREE.Scene();
 			scene.background = new THREE.Color( 0xcce0ff );
 			scene.fog = new THREE.Fog( 0xcce0ff, 5000, 10000 );
 			renderer = new THREE.WebGLRenderer();
@@ -33,7 +46,8 @@
 
 			// camera
 			camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-			camera.position.set( 1000, 300, 1500 );
+			camera.position.set( 0, 300, -1500 );
+			camera.lookAt(new THREE.Vector3 (0.0, 0.0, 0.0));
 			// camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
 			// camera.position.set( - 1.8, 0.9, 2.7 );
 
@@ -66,10 +80,35 @@
 			mesh.receiveShadow = true;
 			scene.add( mesh );
 
-			var car = new Car(scene, 20, 0, -250);
-			// frog = new Frog(scene, 0, 0, 0);
-			frog = new Frog(scene, 550, 0, 40);
-			var log = new Log(scene, 450, 0, 20);
+			// add objects
+			slowCar1 = new Car(scene, 600, 0, 100);
+			slowCar2 = new Car(scene, 450, 0, 100);
+			slowCar3 = new Car(scene, -50, 0, 100);
+			slowCar4 = new Car(scene, -200, 0, 100);
+			slowCar5 = new Car(scene, -750, 0, 100);
+			slowCar6 = new Car(scene, -900, 0, 100);
+			oppNormCar1 = new Car(scene, 900, 0, 200);
+			oppNormCar2 = new Car(scene, 400, 0, 200);
+			oppNormCar3 = new Car(scene, -100, 0, 200);
+			oppNormCar4 = new Car(scene, -600, 0, 200);
+			oppSlowCar1 = new Car(scene, 600, 0, 300);
+			oppSlowCar2 = new Car(scene, 450, 0, 300);
+			oppSlowCar3 = new Car(scene, -50, 0, 300);
+			oppSlowCar4 = new Car(scene, -200, 0, 300);
+			oppSlowCar5 = new Car(scene, -750, 0, 300);
+			oppSlowCar6 = new Car(scene, -900, 0, 300);
+			fastCar1 = new Car(scene, 500, 0, 400);
+			fastCar2 = new Car(scene, -500, 0, 400);
+			frog = new Frog(scene, 0, 0, 0);
+			slowLog1 = new Log(scene, 200, 600, 0, 600);
+			slowLog2 = new Log(scene, 200, 0, 0, 600);
+			slowLog3 = new Log(scene, 200, -600, 0, 600);
+			slowLog4 = new Log(scene, 200, -1200, 0, 600);
+			oppNormLog1 = new Log(scene, 350, 500, 0, 700);
+			oppNormLog2 = new Log(scene, 350, -300, 0, 700);
+			oppNormLog3 = new Log(scene, 350, -1100, 0, 700);
+			fastLog1 = new Log(scene, 275, 500, 0, 800);
+			fastLog2 = new Log(scene, 275, -500, 0, 800);
 
 			// controls
 			var controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -92,8 +131,156 @@
 
 			// frog movement for testing purposes
 			// TODO: remove for actual gameplay
-			frog.setRotation(Date.now()*.002);
-			frog.moveBy(0, 1, 0);
+			frog.moveBy(0, 0, 0.5);
+
+			// move slow/left moving cars
+			if (slowCar1.xpos >= 1000) {
+				slowCar1.setLocation(-1000, slowCar1.ypos, slowCar1.zpos)
+			} else {
+				slowCar1.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowCar2.xpos >= 1000) {
+				slowCar2.setLocation(-1000, slowCar2.ypos, slowCar2.zpos)
+			} else {
+				slowCar2.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowCar3.xpos >= 1000) {
+				slowCar3.setLocation(-1000, slowCar3.ypos, slowCar3.zpos)
+			} else {
+				slowCar3.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowCar4.xpos >= 1000) {
+				slowCar4.setLocation(-1000, slowCar4.ypos, slowCar4.zpos)
+			} else {
+				slowCar4.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowCar5.xpos >= 1000) {
+				slowCar5.setLocation(-1000, slowCar5.ypos, slowCar5.zpos)
+			} else {
+				slowCar5.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowCar6.xpos >= 1000) {
+				slowCar6.setLocation(-1000, slowCar6.ypos, slowCar6.zpos)
+			} else {
+				slowCar6.moveBy(moveDistanceXSlow,0,0);
+			}
+
+			// move normal-right moving cars
+			if (oppNormCar1.xpos <= -1000) {
+				oppNormCar1.setLocation(1000, oppNormCar1.ypos, oppNormCar1.zpos)
+			} else {
+				oppNormCar1.moveBy(moveOppDistanceXNorm,0,0);
+			}
+			if (oppNormCar2.xpos <= -1000) {
+				oppNormCar2.setLocation(1000, oppNormCar2.ypos, oppNormCar2.zpos)
+			} else {
+				oppNormCar2.moveBy(moveOppDistanceXNorm,0,0);
+			}
+			if (oppNormCar3.xpos <= -1000) {
+				oppNormCar3.setLocation(1000, oppNormCar3.ypos, oppNormCar3.zpos)
+			} else {
+				oppNormCar3.moveBy(moveOppDistanceXNorm,0,0);
+			}
+			if (oppNormCar4.xpos <= -1000) {
+				oppNormCar4.setLocation(1000, oppNormCar4.ypos, oppNormCar4.zpos)
+			} else {
+				oppNormCar4.moveBy(moveOppDistanceXNorm,0,0);
+			}
+
+			// move slow-left moving cars
+			if (oppSlowCar1.xpos <= -1000) {
+				oppSlowCar1.setLocation(1000, oppSlowCar1.ypos, oppSlowCar1.zpos)
+			} else {
+				oppSlowCar1.moveBy(moveOppDistanceXSlow,0,0);
+			}
+			if (oppSlowCar2.xpos <= -1000) {
+				oppSlowCar2.setLocation(1000, oppSlowCar2.ypos, oppSlowCar2.zpos)
+			} else {
+				oppSlowCar2.moveBy(moveOppDistanceXSlow,0,0);
+			}
+			if (oppSlowCar3.xpos <= -1000) {
+				oppSlowCar3.setLocation(1000, oppSlowCar3.ypos, oppSlowCar3.zpos)
+			} else {
+				oppSlowCar3.moveBy(moveOppDistanceXSlow,0,0);
+			}
+			if (oppSlowCar4.xpos <= -1000) {
+				oppSlowCar4.setLocation(1000, oppSlowCar4.ypos, oppSlowCar4.zpos)
+			} else {
+				oppSlowCar4.moveBy(moveOppDistanceXSlow,0,0);
+			}
+			if (oppSlowCar5.xpos <= -1000) {
+				oppSlowCar5.setLocation(1000, oppSlowCar5.ypos, oppSlowCar5.zpos)
+			} else {
+				oppSlowCar5.moveBy(moveOppDistanceXSlow,0,0);
+			}
+			if (oppSlowCar6.xpos <= -1000) {
+				oppSlowCar6.setLocation(1000, oppSlowCar6.ypos, oppSlowCar6.zpos)
+			} else {
+				oppSlowCar6.moveBy(moveOppDistanceXSlow,0,0);
+			}
+
+			// move fast-left moving cars
+			if (fastCar1.xpos >= 1000) {
+				fastCar1.setLocation(-1000, fastCar1.ypos, fastCar1.zpos)
+			} else {
+				fastCar1.moveBy(moveDistanceXFast,0,0);
+			}
+			if (fastCar2.xpos >= 1000) {
+				fastCar2.setLocation(-1000, fastCar2.ypos, fastCar2.zpos)
+			} else {
+				fastCar2.moveBy(moveDistanceXFast,0,0);
+			}
+
+			// move slow-left moving logs
+			if (slowLog1.xpos >= 1200) {
+				slowLog1.setLocation(-1200, slowLog1.ypos, slowLog1.zpos)
+			} else {
+				slowLog1.moveBy(moveDistanceXSlow,0,0);
+			}			
+			if (slowLog2.xpos >= 1200) {
+				slowLog2.setLocation(-1200, slowLog2.ypos, slowLog2.zpos)
+			} else {
+				slowLog2.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowLog3.xpos >= 1200) {
+				slowLog3.setLocation(-1200, slowLog3.ypos, slowLog3.zpos)
+			} else {
+				slowLog3.moveBy(moveDistanceXSlow,0,0);
+			}
+			if (slowLog4.xpos >= 1200) {
+				slowLog4.setLocation(-1200, slowLog4.ypos, slowLog4.zpos)
+			} else {
+				slowLog4.moveBy(moveDistanceXSlow,0,0);
+			}
+
+			// move normal-right moving logs
+			if (oppNormLog1.xpos <= -1200) {
+				oppNormLog1.setLocation(1200, oppNormLog1.ypos, oppNormLog1.zpos)
+			} else {
+				oppNormLog1.moveBy(moveOppDistanceXNorm,0,0);
+			}
+			if (oppNormLog2.xpos <= -1200) {
+				oppNormLog2.setLocation(1200, oppNormLog2.ypos, oppNormLog2.zpos)
+			} else {
+				oppNormLog2.moveBy(moveOppDistanceXNorm,0,0);
+			}
+			if (oppNormLog3.xpos <= -1200) {
+				oppNormLog3.setLocation(1200, oppNormLog3.ypos, oppNormLog3.zpos)
+			} else {
+				oppNormLog3.moveBy(moveOppDistanceXNorm,0,0);
+			}
+
+			// move fast-left moving logs
+			if (fastLog1.xpos >= 1200) {
+				fastLog1.setLocation(-1200, fastLog1.ypos, fastLog1.zpos)
+			} else {
+				fastLog1.moveBy(moveDistanceXFast,0,0);
+			}
+			if (fastLog2.xpos >= 1200) {
+				fastLog2.setLocation(-1200, fastLog2.ypos, fastLog2.zpos)
+			} else {
+				fastLog2.moveBy(moveDistanceXFast,0,0);
+			}
 		};
 
 		init();
