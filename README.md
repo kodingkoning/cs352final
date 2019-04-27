@@ -8,16 +8,12 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 
 ### Tasks to complete:
 
-- decide on game design
-	- elements of scene
-	- background of setting
 - decide on game mechanics
 	- grid vs smooth movement for frog
 	- keyboard controls
 	- camera movement - moved by player or by location of frog
 - implement game design
 	- model characters
-		- movement of frog
 		- cars (in progress by Elizabeth)
 		- logs/floating elements
 	- create setting
@@ -34,9 +30,8 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 - Game that compiles and runs
 - Gray box version
 - Custom modeling/texture mapping of something
-- Four of the listed features:
+- Three of the listed features:
 	- Skybox or environment map
-	- Camera and object motion
 	- Animated character
 	- Physics (gravity, collision detection, etc)
 	- Picking
@@ -46,3 +41,5 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 ### Assignment requirements that are fulfilled
 
 - Initial game specification
+- Listed features (1/4):
+	- Camera and object motion
