@@ -11,6 +11,7 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://stemkoski.github.io/Three.js/js/THREEx.KeyboardState.js"></script>
 		<script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
 		<script src="models/car.js"></script>
 		<script src="models/frog.js"></script>
@@ -19,8 +20,12 @@
 
 		// initial background from example at https://threejs.org/examples/#webgl_animation_cloth
 
+		// global variables
 		var renderer, scene;
-		var cube;
+		var keyboard = new THREEx.KeyboardState();
+		var clock = new THREE.Clock();
+
+		// objects for scene
 		var frog;
 		var slowCar1, slowCar2, slowCar3, slowCar4, slowCar5, slowCar6;
 		var oppNormCar1, oppNormCar2, oppNormCar3, oppNormCar4;
@@ -81,6 +86,7 @@
 			scene.add( mesh );
 
 			// add objects
+			frog = new Frog(scene, 0, 0, 0);
 			slowCar1 = new Car(scene, 600, 0, 100);
 			slowCar2 = new Car(scene, 450, 0, 100);
 			slowCar3 = new Car(scene, -50, 0, 100);
@@ -99,7 +105,6 @@
 			oppSlowCar6 = new Car(scene, -900, 0, 300);
 			fastCar1 = new Car(scene, 500, 0, 400);
 			fastCar2 = new Car(scene, -500, 0, 400);
-			frog = new Frog(scene, 0, 0, 0);
 			slowLog1 = new Log(scene, 200, 600, 0, 600);
 			slowLog2 = new Log(scene, 200, 0, 0, 600);
 			slowLog3 = new Log(scene, 200, -600, 0, 600);
@@ -129,9 +134,18 @@
 			requestAnimationFrame( animate );
 			renderer.render( scene, camera );
 
+			// keyboard controls adapted from example at: https://stemkoski.github.io/Three.js/Collision-Detection.html
 			// frog movement for testing purposes
-			// TODO: remove for actual gameplay
-			frog.moveBy(0, 0, 0.5);
+			var delta = clock.getDelta();
+			var moveDistance = 200 * delta;
+			if( keyboard.pressed("up") )
+				frog.moveBy(0, 0, moveDistance);
+			if( keyboard.pressed("down") )
+				frog.moveBy(0, 0, -moveDistance);
+			if( keyboard.pressed("left") )
+				frog.moveBy(moveDistance, 0, 0);
+			if( keyboard.pressed("right") )
+				frog.moveBy(-moveDistance, 0, 0);
 
 			// move slow/left moving cars
 			if (slowCar1.xpos >= 1000) {
@@ -236,7 +250,7 @@
 				slowLog1.setLocation(-1200, slowLog1.ypos, slowLog1.zpos)
 			} else {
 				slowLog1.moveBy(moveDistanceXSlow,0,0);
-			}			
+			}
 			if (slowLog2.xpos >= 1200) {
 				slowLog2.setLocation(-1200, slowLog2.ypos, slowLog2.zpos)
 			} else {

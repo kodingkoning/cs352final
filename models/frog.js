@@ -11,6 +11,7 @@ class Frog {
     var material = new THREE.MeshBasicMaterial( );
     this.mesh = new THREE.Mesh( geometry, material );
     scene.add( this.mesh );
+    this.mesh.rotateY(Math.PI); // make frog face forwards
 
     this.load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh);
     this.setLocation(x, y, z);
