@@ -13,28 +13,8 @@ class Frog {
     scene.add( this.mesh );
     this.mesh.rotateY(Math.PI); // make frog face forwards
 
-    this.load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh);
+    load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh);
     this.setLocation(x, y, z);
-  }
-
-  load_example(url, parent) {
-    // loading from example at: https://threejs.org/docs/#examples/loaders/GLTFLoader
-    // Instantiate a loader
-    var loader = new THREE.GLTFLoader();
-
-    // Load a glTF resource
-    loader.load(
-      // resource URL
-      url,
-      // called when the resource is loaded
-      function ( gltf ) {
-
-        gltf.scene.position.set(-43, 0, 255);
-        scene.add( gltf.scene );
-        parent.add(gltf.scene);
-      }
-    );
-
   }
 
   moveBy(x, y, z) {

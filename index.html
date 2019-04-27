@@ -10,10 +10,12 @@
 	</head>
 	<body>
 		<script src="js/three.js"></script>
-		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<!-- <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script> -->
 		<script src="https://stemkoski.github.io/Three.js/js/THREEx.KeyboardState.js"></script>
 		<script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+		<script src="js/helper.js"></script>
 		<script src="models/car.js"></script>
+		<script src="models/border.js"></script>
 		<script src="models/frog.js"></script>
 		<script src="models/log.js"></script>
 		<script>
@@ -44,14 +46,14 @@
 		function init() {
       		scene = new THREE.Scene();
 			scene.background = new THREE.Color( 0xcce0ff );
-			scene.fog = new THREE.Fog( 0xcce0ff, 5000, 10000 );
+			scene.fog = new THREE.Fog( 0xcce0ff, 3000, 9000 );
 			renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
 			// camera
 			camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-			camera.position.set( 0, 300, -1500 );
+			camera.position.set( 0, 400, 800 );
 			camera.lookAt(new THREE.Vector3 (0.0, 0.0, 0.0));
 			// camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
 			// camera.position.set( - 1.8, 0.9, 2.7 );
@@ -115,11 +117,29 @@
 			fastLog1 = new Log(scene, 275, 500, 0, 800);
 			fastLog2 = new Log(scene, 275, -500, 0, 800);
 
+			// add border elements
+			var xBorder = 60;
+			var zBorder = 60;
+			var border = [];
+			for(var z = -1000; z < 1000; z += zBorder) {
+				border.push(new Border(scene, 1000, 0, z));
+			}
+			for(var z = -1000; z < 1000; z += zBorder) {
+				border.push(new Border(scene, -1000, 0, z));
+			}
+			for(var x = -1000; x < 1000; x += xBorder) {
+				border.push(new Border(scene, x, 0, 1000));
+			}
+			for(var x = -1000; x < 1000; x += xBorder) {
+				border.push(new Border(scene, x, 0, -1000));
+			}
+
+			// consider adding controls back in if the camera can still follow the frog well
 			// controls
-			var controls = new THREE.OrbitControls( camera, renderer.domElement );
-			controls.maxPolarAngle = Math.PI * 0.497;
-			controls.minDistance = 500;
-			controls.maxDistance = 5000;
+			// var controls = new THREE.OrbitControls( camera, renderer.domElement );
+			// controls.maxPolarAngle = Math.PI * 0.497;
+			// controls.minDistance = 500;
+			// controls.maxDistance = 5000;
 
 			window.addEventListener( 'resize', onWindowResize, false );
 		}
@@ -146,6 +166,8 @@
 				frog.moveBy(moveDistance, 0, 0);
 			if( keyboard.pressed("right") )
 				frog.moveBy(-moveDistance, 0, 0);
+			// make camera follow frog
+			frog.mesh.add(camera);
 
 			// move slow/left moving cars
 			if (slowCar1.xpos >= 1000) {
