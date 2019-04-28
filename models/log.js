@@ -10,6 +10,7 @@ class Log {
     this.xpos = x;
     this.ypos = y;
     this.zpos = z;
+    this.movement = 1;
     scene.add(this.mesh);
   }
 

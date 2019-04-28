@@ -90,7 +90,7 @@
 			scene.add( mesh );
 
 			// add objects
-			frog = new Frog(scene, 0, 0, 0);
+			frog = new Frog(scene, 0, 1.1, 0); // y = 1.1 so origin of collision ray is not inside mesh
 			slowCar1 = new Car(scene, 600, 0, 100); carList.push(slowCar1.mesh);
 			slowCar2 = new Car(scene, 450, 0, 100); carList.push(slowCar2.mesh);
 			slowCar3 = new Car(scene, -50, 0, 100); carList.push(slowCar3.mesh);
@@ -331,13 +331,17 @@
 				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
 				var carResults = ray.intersectObjects( carList );
 				if ( carResults.length > 0 && carResults[0].distance < directionVector.length() ) 
-					frog.setLocation(0, 0, 0);
+					frog.setLocation(0, 1.1, 0);
 
 				var logResults = ray.intersectObjects( logList );
 				if ( logResults.length > 0 && logResults[0].distance < directionVector.length() )
 					logColl = true;
 			}
-			if (!logColl && frog.zpos > 575 && frog.zpos < 725) frog.setLocation(0, 0, 0);
+			if (!logColl && frog.zpos > 575 && frog.zpos < 725) {
+				frog.setLocation(0, 1.1, 0);
+			} else if (logColl && frog.zpos > 575 && frog.zpos < 725) {
+		 		frog.moveBy(1, 0, 0); // TODO: find a way to pass the collided log's movement speed
+			}
 		};
 
 		init();
