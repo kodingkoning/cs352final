@@ -42,6 +42,8 @@
 		var moveOppDistanceXNorm = -moveDistanceXNorm;
 		var moveDistanceXFast = 3;
 		var moveOppDistanceXFast = -moveDistanceXFast;
+		var carList = [];
+		var logList = [];
 
 		function init() {
       		scene = new THREE.Scene();
@@ -89,33 +91,33 @@
 
 			// add objects
 			frog = new Frog(scene, 0, 0, 0);
-			slowCar1 = new Car(scene, 600, 0, 100);
-			slowCar2 = new Car(scene, 450, 0, 100);
-			slowCar3 = new Car(scene, -50, 0, 100);
-			slowCar4 = new Car(scene, -200, 0, 100);
-			slowCar5 = new Car(scene, -750, 0, 100);
-			slowCar6 = new Car(scene, -900, 0, 100);
-			oppNormCar1 = new Car(scene, 900, 0, 200);
-			oppNormCar2 = new Car(scene, 400, 0, 200);
-			oppNormCar3 = new Car(scene, -100, 0, 200);
-			oppNormCar4 = new Car(scene, -600, 0, 200);
-			oppSlowCar1 = new Car(scene, 600, 0, 300);
-			oppSlowCar2 = new Car(scene, 450, 0, 300);
-			oppSlowCar3 = new Car(scene, -50, 0, 300);
-			oppSlowCar4 = new Car(scene, -200, 0, 300);
-			oppSlowCar5 = new Car(scene, -750, 0, 300);
-			oppSlowCar6 = new Car(scene, -900, 0, 300);
-			fastCar1 = new Car(scene, 500, 0, 400);
-			fastCar2 = new Car(scene, -500, 0, 400);
-			slowLog1 = new Log(scene, 200, 600, 0, 600);
-			slowLog2 = new Log(scene, 200, 0, 0, 600);
-			slowLog3 = new Log(scene, 200, -600, 0, 600);
-			slowLog4 = new Log(scene, 200, -1200, 0, 600);
-			oppNormLog1 = new Log(scene, 350, 500, 0, 700);
-			oppNormLog2 = new Log(scene, 350, -300, 0, 700);
-			oppNormLog3 = new Log(scene, 350, -1100, 0, 700);
-			fastLog1 = new Log(scene, 275, 500, 0, 800);
-			fastLog2 = new Log(scene, 275, -500, 0, 800);
+			slowCar1 = new Car(scene, 600, 0, 100); carList.push(slowCar1.mesh);
+			slowCar2 = new Car(scene, 450, 0, 100); carList.push(slowCar2.mesh);
+			slowCar3 = new Car(scene, -50, 0, 100); carList.push(slowCar3.mesh);
+			slowCar4 = new Car(scene, -200, 0, 100); carList.push(slowCar4.mesh);
+			slowCar5 = new Car(scene, -750, 0, 100); carList.push(slowCar5.mesh);
+			slowCar6 = new Car(scene, -900, 0, 100); carList.push(slowCar6.mesh);
+			oppNormCar1 = new Car(scene, 900, 0, 200); carList.push(oppNormCar1.mesh);
+			oppNormCar2 = new Car(scene, 400, 0, 200); carList.push(oppNormCar2.mesh);
+			oppNormCar3 = new Car(scene, -100, 0, 200); carList.push(oppNormCar3.mesh);
+			oppNormCar4 = new Car(scene, -600, 0, 200); carList.push(oppNormCar4.mesh);
+			oppSlowCar1 = new Car(scene, 600, 0, 300); carList.push(oppSlowCar1.mesh);
+			oppSlowCar2 = new Car(scene, 450, 0, 300); carList.push(oppSlowCar2.mesh);
+			oppSlowCar3 = new Car(scene, -50, 0, 300); carList.push(oppSlowCar3.mesh);
+			oppSlowCar4 = new Car(scene, -200, 0, 300); carList.push(oppSlowCar4.mesh);
+			oppSlowCar5 = new Car(scene, -750, 0, 300); carList.push(oppSlowCar5.mesh);
+			oppSlowCar6 = new Car(scene, -900, 0, 300); carList.push(oppSlowCar6.mesh);
+			fastCar1 = new Car(scene, 500, 0, 400); carList.push(fastCar1.mesh);
+			fastCar2 = new Car(scene, -500, 0, 400); carList.push(fastCar2.mesh);
+			slowLog1 = new Log(scene, 200, 600, -24, 600); logList.push(slowLog1.mesh);
+			slowLog2 = new Log(scene, 200, 0, -24, 600); logList.push(slowLog2.mesh);
+			slowLog3 = new Log(scene, 200, -600, -24, 600); logList.push(slowLog3.mesh);
+			slowLog4 = new Log(scene, 200, -1200, -24, 600); logList.push(slowLog4.mesh);
+			oppNormLog1 = new Log(scene, 350, 500, -24, 650); logList.push(oppNormLog1.mesh);
+			oppNormLog2 = new Log(scene, 350, -300, -24, 650); logList.push(oppNormLog2.mesh);
+			oppNormLog3 = new Log(scene, 350, -1100, -24, 650); logList.push(oppNormLog3.mesh);
+			fastLog1 = new Log(scene, 275, 500, -24, 700); logList.push(fastLog1.mesh);
+			fastLog2 = new Log(scene, 275, -500, -24, 700); logList.push(fastLog2.mesh);
 
 			// add border elements
 			var xBorder = 60;
@@ -164,7 +166,7 @@
 				frog.moveBy(0, 0, -moveDistance);
 			if( keyboard.pressed("left") )
 				frog.moveBy(moveDistance, 0, 0);
-			if( keyboard.pressed("right") )
+			if( keyboard.pressed("right") ) 
 				frog.moveBy(-moveDistance, 0, 0);
 			// make camera follow frog
 			frog.mesh.add(camera);
@@ -316,6 +318,23 @@
 				fastLog2.setLocation(-1200, fastLog2.ypos, fastLog2.zpos)
 			} else {
 				fastLog2.moveBy(moveDistanceXFast,0,0);
+			}
+
+			// collision detection
+			var originPoint = frog.mesh.position.clone();
+			for (var vertexIndex = 0; vertexIndex < frog.mesh.geometry.vertices.length; vertexIndex++) {		
+				var localVertex = frog.mesh.geometry.vertices[vertexIndex].clone();
+				var globalVertex = localVertex.applyMatrix4( frog.mesh.matrix );
+				var directionVector = globalVertex.sub( frog.mesh.position );
+				
+				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+				var carResults = ray.intersectObjects( carList );
+				if ( carResults.length > 0 && carResults[0].distance < directionVector.length() ) 
+					frog.setLocation(0, 0, 0);
+
+				var logResults = ray.intersectObjects( logList );
+				if (!(logResults.length > 0 && logResults[0].distance < directionVector.length()) && frog.zpos > 570 && frog.zpos < 730)
+					frog.setLocation(0, 0, 0);
 			}
 		};
 
