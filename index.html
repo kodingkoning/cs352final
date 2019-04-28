@@ -18,6 +18,7 @@
 		<script src="models/border.js"></script>
 		<script src="models/frog.js"></script>
 		<script src="models/log.js"></script>
+		<script src="models/hedge.js"></script>
 		<script>
 
 		// initial background from example at https://threejs.org/examples/#webgl_animation_cloth
@@ -119,22 +120,7 @@
 			fastLog1 = new Log(scene, 275, 500, -24, 700); logList.push(fastLog1.mesh);
 			fastLog2 = new Log(scene, 275, -500, -24, 700); logList.push(fastLog2.mesh);
 
-			// add border elements
-			var xBorder = 60;
-			var zBorder = 60;
-			var border = [];
-			for(var z = -1000; z < 1000; z += zBorder) {
-				border.push(new Border(scene, 1000, 0, z));
-			}
-			for(var z = -1000; z < 1000; z += zBorder) {
-				border.push(new Border(scene, -1000, 0, z));
-			}
-			for(var x = -1000; x < 1000; x += xBorder) {
-				border.push(new Border(scene, x, 0, 1000));
-			}
-			for(var x = -1000; x < 1000; x += xBorder) {
-				border.push(new Border(scene, x, 0, -1000));
-			}
+			var hedge = new Hedge(scene, -1000, -1000, 1000, 1000, 60, 60);
 
 			// consider adding controls back in if the camera can still follow the frog well
 			// controls
@@ -166,7 +152,7 @@
 				frog.moveBy(0, 0, -moveDistance);
 			if( keyboard.pressed("left") )
 				frog.moveBy(moveDistance, 0, 0);
-			if( keyboard.pressed("right") ) 
+			if( keyboard.pressed("right") )
 				frog.moveBy(-moveDistance, 0, 0);
 			// make camera follow frog
 			frog.mesh.add(camera);
@@ -323,14 +309,14 @@
 			// collision detection
 			var originPoint = frog.mesh.position.clone();
 			var logColl = false;
-			for (var vertexIndex = 0; vertexIndex < frog.mesh.geometry.vertices.length; vertexIndex++) {		
+			for (var vertexIndex = 0; vertexIndex < frog.mesh.geometry.vertices.length; vertexIndex++) {
 				var localVertex = frog.mesh.geometry.vertices[vertexIndex].clone();
 				var globalVertex = localVertex.applyMatrix4( frog.mesh.matrix );
 				var directionVector = globalVertex.sub( frog.mesh.position );
-				
+
 				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
 				var carResults = ray.intersectObjects( carList );
-				if ( carResults.length > 0 && carResults[0].distance < directionVector.length() ) 
+				if ( carResults.length > 0 && carResults[0].distance < directionVector.length() )
 					frog.setLocation(0, 1.1, 0);
 
 				var logResults = ray.intersectObjects( logList );
