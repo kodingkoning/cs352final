@@ -41,5 +41,6 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 ### Assignment requirements that are fulfilled
 
 - Initial game specification
-- Listed features (1/4):
+- Listed features (2/4):
 	- Camera and object motion
+	- Collision Detection
