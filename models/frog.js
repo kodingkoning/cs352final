@@ -23,7 +23,7 @@ class Frog {
 
   moveBy(x, y, z) {
     // TODO: animate movement
-    
+
     var x_coord = this.mesh.position.x;
     var y_coord = this.mesh.position.y;
     var z_coord = this.mesh.position.z;
