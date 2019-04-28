@@ -3,10 +3,13 @@ class Log {
     this.scene = scene;
 
     // TODO: create log model
-    var geo = new THREE.BoxBufferGeometry(length, 50, 50);
+    var geo = new THREE.BoxGeometry(length, 50, 50);
     var mat = new THREE.MeshLambertMaterial( { color: 0x654321 } );
     this.mesh = new THREE.Mesh(geo, mat);
     this.setLocation(x, y, z);
+    this.xpos = x;
+    this.ypos = y;
+    this.zpos = z;
     scene.add(this.mesh);
   }
 
