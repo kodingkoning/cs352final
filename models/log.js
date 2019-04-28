@@ -1,5 +1,5 @@
 class Log {
-  constructor(scene, length, x, y, z) {
+  constructor(scene, movement, length, x, y, z) {
     this.scene = scene;
 
     // TODO: create log model
@@ -10,7 +10,7 @@ class Log {
     this.xpos = x;
     this.ypos = y;
     this.zpos = z;
-    this.movement = 1;
+    this.mesh.movement = movement;
     scene.add(this.mesh);
   }
 

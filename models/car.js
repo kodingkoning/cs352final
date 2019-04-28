@@ -1,9 +1,9 @@
 class Car {
-  constructor(scene, x, y, z) {
+  constructor(scene, length, x, y, z) {
     this.scene = scene;
 
     // TODO: create car model
-    var geo = new THREE.BoxGeometry(50, 50, 50);
+    var geo = new THREE.BoxGeometry(length, 50, 50);
     var mat = new THREE.MeshLambertMaterial();
     this.mesh = new THREE.Mesh(geo, mat);
     this.setLocation(x, y, z);
