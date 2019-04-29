@@ -14,9 +14,13 @@ class Car {
       var mat = new THREE.MeshBasicMaterial();
       this.mesh = new THREE.Mesh(geo, mat);
       var scale_num = 0.054;
-      var offset = [50, 3, 0];
+      if (speed < 0) {
+        var offset = [-50, 3, 0];
+      } else {
+        var offset = [50, 3, 0];
+      }
       var scale = [scale_num, scale_num, scale_num];
-      var rotation = [0, Math.PI/2, 0]; //TODO: set based on direction of movement
+      var rotation = [0, Math.PI/2, 0];
       if(speed < 0) { rotation[1] = 3*Math.PI/2; }
       load_example('models/gltf/handpainted_truck/scene.gltf', this.mesh, offset, scale, rotation, true);
     } else {
