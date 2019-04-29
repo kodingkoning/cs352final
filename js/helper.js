@@ -14,6 +14,7 @@ load_example = function(url, parent, offset, scale, rotation, act) {
       gltf.scene.rotation.set(rotation[0], rotation[1], rotation[2]);
       scene.add( gltf.scene );
       parent.add(gltf.scene);
+      parent.material.visible = false;
 
       // TODO: make animation work
       // if (act) {

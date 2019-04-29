@@ -9,7 +9,7 @@ class Frog {
     // fix to make frog mobile from: https://discourse.threejs.org/t/how-to-move-car-obj-file-on-map-solved/1173
     var geometry = new THREE.BoxGeometry( 20, 20, 20 );
     var material = new THREE.MeshBasicMaterial();
-    material.visible = false;
+    //material.visible = false;
     this.mesh = new THREE.Mesh( geometry, material );
     scene.add( this.mesh );
     this.mesh.rotateY(Math.PI); // make frog face forwards

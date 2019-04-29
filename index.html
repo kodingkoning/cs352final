@@ -90,6 +90,11 @@
 			mesh.receiveShadow = true;
 			scene.add( mesh );
 
+			loader.onLoad = function() {
+				frog.mesh.material.visible = false;
+				// TODO: do for trucks and other loaded models
+			}
+
 			// add objects
 			frog = new Frog(scene, 0, 1.1, 0); // y = 1.1 so origin of collision ray is not inside mesh
 			roads = []; // TODO: add roads offset
