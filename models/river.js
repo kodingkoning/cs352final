@@ -7,7 +7,7 @@ class River {
 
     for(var i = 0; i < num_logs; i++) {
       var x = i*(maxX-minX)/num_logs + offset + minX;
-      this.logs.push(new Log(scene, length, x, 0, z, minX, maxX));
+      this.logs.push(new Log(scene, length, x, -24, z, minX, maxX));
     }
   }
 
