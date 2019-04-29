@@ -9,13 +9,15 @@ class Car {
 
     if (length == 100) {
       // truck
-      this.mesh = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial());
+      var geo = new THREE.BoxGeometry(length, 50, 50);
+      var mat = new THREE.MeshBasicMaterial();
+      mat.visible = false;
+      this.mesh = new THREE.Mesh(geo, mat);
       var scale_num = 0.054;
       var offset = [50, 3, 0];
       var scale = [scale_num, scale_num, scale_num];
       var rotation = [0, Math.PI/2, 0]; //TODO: set based on direction of movement
       load_example('models/gltf/handpainted_truck/scene.gltf', this.mesh, offset, scale, rotation, true);
-      this.mesh.material = new THREE.MeshLambertMaterial( {color: 0x000000 } );
     } else {
       // often of length 50
       var geo = new THREE.BoxGeometry(length, 50, 50);
