@@ -1,8 +1,9 @@
 // model from: https://sketchfab.com/3d-models/handpainted-truck-124392d37fd047aea2c5cf61f9dd7750
 // Available under the Create Commons license. No modifications made.
 class Car {
-  constructor(scene, length, x, y, z, minX, maxX) {
+  constructor(scene, length, x, y, z, minX, maxX, speed) {
     this.scene = scene;
+    this.speed = speed;
     this.action = null; // for list of animations from the gltf model
 
     // TODO: create car model for all lengths of cars (possibly specify in constructor)
@@ -17,6 +18,7 @@ class Car {
       var offset = [50, 3, 0];
       var scale = [scale_num, scale_num, scale_num];
       var rotation = [0, Math.PI/2, 0]; //TODO: set based on direction of movement
+      if(speed < 0) { rotation[1] = 3*Math.PI/2; }
       load_example('models/gltf/handpainted_truck/scene.gltf', this.mesh, offset, scale, rotation, true);
     } else {
       // often of length 50

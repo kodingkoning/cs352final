@@ -7,7 +7,7 @@ class Road {
 
     for(var i = 0; i < num_cars; i++) {
       var x = i*(maxX-minX)/num_cars + minX;
-      this.cars.push(new Car(scene, length, x, 0, z, minX, maxX));
+      this.cars.push(new Car(scene, length, x, 0, z, minX, maxX, speed));
     }
   }
 
