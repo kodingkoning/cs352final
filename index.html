@@ -19,6 +19,8 @@
 		<script src="models/frog.js"></script>
 		<script src="models/log.js"></script>
 		<script src="models/hedge.js"></script>
+		<script src="models/road.js"></script>
+		<script src="models/river.js"></script>
 		<script>
 
 		// initial background from example at https://threejs.org/examples/#webgl_animation_cloth
@@ -30,10 +32,7 @@
 
 		// objects for scene
 		var frog;
-		var slowCar1, slowCar2, slowCar3, slowCar4, slowCar5, slowCar6;
-		var oppNormCar1, oppNormCar2, oppNormCar3, oppNormCar4;
-		var oppSlowCar1, oppSlowCar2, oppSlowCar3, oppSlowCar4, oppSlowCar5, oppSlowCar6;
-		var fastCar1, fastCar2;
+		var roads;
 		var slowLog1, slowLog2, slowLog3, slowLog4;
 		var oppNormLog1, oppNormLog2, oppNormLog3;
 		var fastLog1, fastLog2;
@@ -93,47 +92,40 @@
 
 			// add objects
 			frog = new Frog(scene, 0, 1.1, 0); // y = 1.1 so origin of collision ray is not inside mesh
-			slowCar1 = new Car(scene, 50, 600, 0, 100); carList.push(slowCar1.mesh);
-			slowCar2 = new Car(scene, 50, 450, 0, 100); carList.push(slowCar2.mesh);
-			slowCar3 = new Car(scene, 50, -50, 0, 100); carList.push(slowCar3.mesh);
-			slowCar4 = new Car(scene, 50, -200, 0, 100); carList.push(slowCar4.mesh);
-			slowCar5 = new Car(scene, 50, -750, 0, 100); carList.push(slowCar5.mesh);
-			slowCar6 = new Car(scene, 50, -900, 0, 100); carList.push(slowCar6.mesh);
-			normalTruck1 = new Car(scene, 100, -500, 0, 150); carList.push(normalTruck1.mesh);
-			normalTruck2 = new Car(scene, 100, 500, 0, 150); carList.push(normalTruck2.mesh);
-			oppNormCar1 = new Car(scene, 50, 900, 0, 200); carList.push(oppNormCar1.mesh);
-			oppNormCar2 = new Car(scene, 50, 400, 0, 200); carList.push(oppNormCar2.mesh);
-			oppNormCar3 = new Car(scene, 50, -100, 0, 200); carList.push(oppNormCar3.mesh);
-			oppNormCar4 = new Car(scene, 50, -600, 0, 200); carList.push(oppNormCar4.mesh);
-			oppFastTruck1 = new Car(scene, 100, -500, 0, 250); carList.push(oppFastTruck1.mesh);
-			oppFastTruck2 = new Car(scene, 100, 500, 0, 250); carList.push(oppFastTruck2.mesh);
-			oppSlowCar1 = new Car(scene, 50, 600, 0, 300); carList.push(oppSlowCar1.mesh);
-			oppSlowCar2 = new Car(scene, 50, 450, 0, 300); carList.push(oppSlowCar2.mesh);
-			oppSlowCar3 = new Car(scene, 50, -50, 0, 300); carList.push(oppSlowCar3.mesh);
-			oppSlowCar4 = new Car(scene, 50, -200, 0, 300); carList.push(oppSlowCar4.mesh);
-			oppSlowCar5 = new Car(scene, 50, -750, 0, 300); carList.push(oppSlowCar5.mesh);
-			oppSlowCar6 = new Car(scene, 50, -900, 0, 300); carList.push(oppSlowCar6.mesh);
-			fastCar1 = new Car(scene, 50, 500, 0, 350); carList.push(fastCar1.mesh);
-			fastCar2 = new Car(scene, 50, -500, 0, 350); carList.push(fastCar2.mesh);
-			oppSlowLog1 = new Log(scene, moveOppDistanceXSlow, 200, 600, -24, 550); logList.push(oppSlowLog1.mesh);
-			oppSlowLog2 = new Log(scene, moveOppDistanceXSlow, 200, 0, -24, 550); logList.push(oppSlowLog2.mesh);
-			oppSlowLog3 = new Log(scene, moveOppDistanceXSlow, 200, -600, -24, 550); logList.push(oppSlowLog3.mesh);
-			oppSlowLog4 = new Log(scene, moveOppDistanceXSlow, 200, -1200, -24, 550); logList.push(oppSlowLog4.mesh);
-			slowLog1 = new Log(scene, moveDistanceXSlow, 200, 600, -24, 600); logList.push(slowLog1.mesh);
-			slowLog2 = new Log(scene, moveDistanceXSlow, 200, 0, -24, 600); logList.push(slowLog2.mesh);
-			slowLog3 = new Log(scene, moveDistanceXSlow, 200, -600, -24, 600); logList.push(slowLog3.mesh);
-			slowLog4 = new Log(scene, moveDistanceXSlow, 200, -1200, -24, 600); logList.push(slowLog4.mesh);
-			oppNormLog1 = new Log(scene, moveOppDistanceXNorm, 350, 500, -24, 650); logList.push(oppNormLog1.mesh);
-			oppNormLog2 = new Log(scene, moveOppDistanceXNorm, 350, -300, -24, 650); logList.push(oppNormLog2.mesh);
-			oppNormLog3 = new Log(scene, moveOppDistanceXNorm, 350, -1100, -24, 650); logList.push(oppNormLog3.mesh);
-			fastLog1 = new Log(scene, moveDistanceXFast, 275, 500, -24, 700); logList.push(fastLog1.mesh);
-			fastLog2 = new Log(scene, moveDistanceXFast, 275, -500, -24, 700); logList.push(fastLog2.mesh);
-			oppNormShortLog1 = new Log(scene, moveOppDistanceXNorm, 100, 1200, -24, 750); logList.push(oppNormShortLog1.mesh);
-			oppNormShortLog2 = new Log(scene, moveOppDistanceXNorm, 100, 600, -24, 750); logList.push(oppNormShortLog2.mesh);
-			oppNormShortLog3 = new Log(scene, moveOppDistanceXNorm, 100, 0, -24, 750); logList.push(oppNormShortLog3.mesh);
-			oppNormShortLog4 = new Log(scene, moveOppDistanceXNorm, 100, -600, -24, 750); logList.push(oppNormShortLog4.mesh);
+			roads = []; // TODO: add roads offset
+			roads.push( new Road(scene, 50, 100, 6, moveDistanceXSlow, -1000, 1000) );
+			roads.push( new Road(scene, 100, 150, 2, moveDistanceXNorm, -1000, 1000) );
+			roads.push( new Road(scene, 50, 200, 4, moveOppDistanceXNorm, -1000, 1000) );
+			roads.push( new Road(scene, 100, 250, 2, moveOppDistanceXFast, -1000, 1000) );
+			roads.push( new Road(scene, 50, 300, 6, moveOppDistanceXSlow, -1000, 1000) );
+			roads.push( new Road(scene, 50, 350, 2, moveDistanceXFast, -1000, 1000) );
 
-			var hedge = new Hedge(scene, -1000, -1000, 1000, 1000, 60, 60);
+			// populate carList for collision detection
+			for(var i = 0; i < roads.length; i++) {
+				var road = roads[i];
+				for(var j = 0; j < road.cars.length; j++) {
+					carList.push(road.cars[j].mesh);
+				}
+			}
+
+			rivers = [];
+			rivers.push( new River(scene, 200, 550, 4, 0, moveOppDistanceXSlow, -1000, 1000) );
+			rivers.push( new River(scene, 200, 600, 4, 0, moveDistanceXSlow, -1000, 1000) );
+			rivers.push( new River(scene, 350, 650, 3, 500, moveOppDistanceXNorm, -1000, 1000) );
+			rivers.push( new River(scene, 275, 700, 2, 500, moveDistanceXFast, -1000, 1000) );
+			rivers.push( new River(scene, 100, 750, 4, 0, moveOppDistanceXNorm, -1000, 1000) );
+
+			// populate logList for collision detection
+			for(var i = 0; i < rivers.length; i++) {
+				var river = rivers[i];
+				for(var j = 0; j < river.logs.length; j++) {
+					logList.push(river.logs[j].mesh);
+				}
+			}
+
+			// the edge of the hedge is narrower than the movement so that they appear more smoothly
+			var hedge = new Hedge(scene, -900, -1000, 900, 1000, 60, 60);
+			// TODO: add collision detection with stopping at the hedge
 
 			// consider adding controls back in if the camera can still follow the frog well
 			// controls
@@ -170,221 +162,12 @@
 			// make camera follow frog
 			frog.mesh.add(camera);
 
-			// move slow-left moving cars
-			if (slowCar1.xpos >= 1000) {
-				slowCar1.setLocation(-1000, slowCar1.ypos, slowCar1.zpos)
-			} else {
-				slowCar1.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowCar2.xpos >= 1000) {
-				slowCar2.setLocation(-1000, slowCar2.ypos, slowCar2.zpos)
-			} else {
-				slowCar2.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowCar3.xpos >= 1000) {
-				slowCar3.setLocation(-1000, slowCar3.ypos, slowCar3.zpos)
-			} else {
-				slowCar3.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowCar4.xpos >= 1000) {
-				slowCar4.setLocation(-1000, slowCar4.ypos, slowCar4.zpos)
-			} else {
-				slowCar4.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowCar5.xpos >= 1000) {
-				slowCar5.setLocation(-1000, slowCar5.ypos, slowCar5.zpos)
-			} else {
-				slowCar5.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowCar6.xpos >= 1000) {
-				slowCar6.setLocation(-1000, slowCar6.ypos, slowCar6.zpos)
-			} else {
-				slowCar6.moveBy(moveDistanceXSlow,0,0);
+			for(var i = 0; i < roads.length; i++) {
+				roads[i].move();
 			}
 
-			// move normal-left moving trucks
-			if (normalTruck1.xpos >= 1000) {
-				normalTruck1.setLocation(-1000, normalTruck1.ypos, normalTruck1.zpos)
-			} else {
-				normalTruck1.moveBy(moveDistanceXNorm,0,0);
-			}
-			if (normalTruck2.xpos >= 1000) {
-				normalTruck2.setLocation(-1000, normalTruck2.ypos, normalTruck2.zpos)
-			} else {
-				normalTruck2.moveBy(moveDistanceXNorm,0,0);
-			}
-
-			// move normal-right moving cars
-			if (oppNormCar1.xpos <= -1000) {
-				oppNormCar1.setLocation(1000, oppNormCar1.ypos, oppNormCar1.zpos)
-			} else {
-				oppNormCar1.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormCar2.xpos <= -1000) {
-				oppNormCar2.setLocation(1000, oppNormCar2.ypos, oppNormCar2.zpos)
-			} else {
-				oppNormCar2.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormCar3.xpos <= -1000) {
-				oppNormCar3.setLocation(1000, oppNormCar3.ypos, oppNormCar3.zpos)
-			} else {
-				oppNormCar3.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormCar4.xpos <= -1000) {
-				oppNormCar4.setLocation(1000, oppNormCar4.ypos, oppNormCar4.zpos)
-			} else {
-				oppNormCar4.moveBy(moveOppDistanceXNorm,0,0);
-			}
-
-			// move normal-right moving trucks
-			if (oppFastTruck1.xpos <= -1000) {
-				oppFastTruck1.setLocation(1000, oppFastTruck1.ypos, oppFastTruck1.zpos)
-			} else {
-				oppFastTruck1.moveBy(moveOppDistanceXFast,0,0);
-			}
-			if (oppFastTruck2.xpos <= -1000) {
-				oppFastTruck2.setLocation(1000, oppFastTruck2.ypos, oppFastTruck2.zpos)
-			} else {
-				oppFastTruck2.moveBy(moveOppDistanceXFast,0,0);
-			}
-
-			// move slow-left moving cars
-			if (oppSlowCar1.xpos <= -1000) {
-				oppSlowCar1.setLocation(1000, oppSlowCar1.ypos, oppSlowCar1.zpos)
-			} else {
-				oppSlowCar1.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowCar2.xpos <= -1000) {
-				oppSlowCar2.setLocation(1000, oppSlowCar2.ypos, oppSlowCar2.zpos)
-			} else {
-				oppSlowCar2.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowCar3.xpos <= -1000) {
-				oppSlowCar3.setLocation(1000, oppSlowCar3.ypos, oppSlowCar3.zpos)
-			} else {
-				oppSlowCar3.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowCar4.xpos <= -1000) {
-				oppSlowCar4.setLocation(1000, oppSlowCar4.ypos, oppSlowCar4.zpos)
-			} else {
-				oppSlowCar4.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowCar5.xpos <= -1000) {
-				oppSlowCar5.setLocation(1000, oppSlowCar5.ypos, oppSlowCar5.zpos)
-			} else {
-				oppSlowCar5.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowCar6.xpos <= -1000) {
-				oppSlowCar6.setLocation(1000, oppSlowCar6.ypos, oppSlowCar6.zpos)
-			} else {
-				oppSlowCar6.moveBy(moveOppDistanceXSlow,0,0);
-			}
-
-			// move fast-left moving cars
-			if (fastCar1.xpos >= 1000) {
-				fastCar1.setLocation(-1000, fastCar1.ypos, fastCar1.zpos)
-			} else {
-				fastCar1.moveBy(moveDistanceXFast,0,0);
-			}
-			if (fastCar2.xpos >= 1000) {
-				fastCar2.setLocation(-1000, fastCar2.ypos, fastCar2.zpos)
-			} else {
-				fastCar2.moveBy(moveDistanceXFast,0,0);
-			}
-
-			// move slow-right moving logs
-			if (oppSlowLog1.xpos <= -1200) {
-				oppSlowLog1.setLocation(1200, oppSlowLog1.ypos, oppSlowLog1.zpos)
-			} else {
-				oppSlowLog1.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowLog2.xpos <= -1200) {
-				oppSlowLog2.setLocation(1200, oppSlowLog2.ypos, oppSlowLog2.zpos)
-			} else {
-				oppSlowLog2.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowLog3.xpos <= -1200) {
-				oppSlowLog3.setLocation(1200, oppSlowLog3.ypos, oppSlowLog3.zpos)
-			} else {
-				oppSlowLog3.moveBy(moveOppDistanceXSlow,0,0);
-			}
-			if (oppSlowLog4.xpos <= -1200) {
-				oppSlowLog4.setLocation(1200, oppSlowLog4.ypos, oppSlowLog4.zpos)
-			} else {
-				oppSlowLog4.moveBy(moveOppDistanceXSlow,0,0);
-			}
-
-			// move slow-left moving logs
-			if (slowLog1.xpos >= 1200) {
-				slowLog1.setLocation(-1200, slowLog1.ypos, slowLog1.zpos)
-			} else {
-				slowLog1.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowLog2.xpos >= 1200) {
-				slowLog2.setLocation(-1200, slowLog2.ypos, slowLog2.zpos)
-			} else {
-				slowLog2.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowLog3.xpos >= 1200) {
-				slowLog3.setLocation(-1200, slowLog3.ypos, slowLog3.zpos)
-			} else {
-				slowLog3.moveBy(moveDistanceXSlow,0,0);
-			}
-			if (slowLog4.xpos >= 1200) {
-				slowLog4.setLocation(-1200, slowLog4.ypos, slowLog4.zpos)
-			} else {
-				slowLog4.moveBy(moveDistanceXSlow,0,0);
-			}
-
-			// move normal-right moving logs
-			if (oppNormLog1.xpos <= -1200) {
-				oppNormLog1.setLocation(1200, oppNormLog1.ypos, oppNormLog1.zpos)
-			} else {
-				oppNormLog1.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormLog2.xpos <= -1200) {
-				oppNormLog2.setLocation(1200, oppNormLog2.ypos, oppNormLog2.zpos)
-			} else {
-				oppNormLog2.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormLog3.xpos <= -1200) {
-				oppNormLog3.setLocation(1200, oppNormLog3.ypos, oppNormLog3.zpos)
-			} else {
-				oppNormLog3.moveBy(moveOppDistanceXNorm,0,0);
-			}
-
-			// move fast-left moving logs
-			if (fastLog1.xpos >= 1200) {
-				fastLog1.setLocation(-1200, fastLog1.ypos, fastLog1.zpos)
-			} else {
-				fastLog1.moveBy(moveDistanceXFast,0,0);
-			}
-			if (fastLog2.xpos >= 1200) {
-				fastLog2.setLocation(-1200, fastLog2.ypos, fastLog2.zpos)
-			} else {
-				fastLog2.moveBy(moveDistanceXFast,0,0);
-			}
-
-			// move normal-right moving short logs
-			if (oppNormShortLog1.xpos <= -1200) {
-				oppNormShortLog1.setLocation(1200, oppNormShortLog1.ypos, oppNormShortLog1.zpos)
-			} else {
-				oppNormShortLog1.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormShortLog2.xpos <= -1200) {
-				oppNormShortLog2.setLocation(1200, oppNormShortLog2.ypos, oppNormShortLog2.zpos)
-			} else {
-				oppNormShortLog2.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormShortLog3.xpos <= -1200) {
-				oppNormShortLog3.setLocation(1200, oppNormShortLog3.ypos, oppNormShortLog3.zpos)
-			} else {
-				oppNormShortLog3.moveBy(moveOppDistanceXNorm,0,0);
-			}
-			if (oppNormShortLog4.xpos <= -1200) {
-				oppNormShortLog4.setLocation(1200, oppNormShortLog4.ypos, oppNormShortLog4.zpos)
-			} else {
-				oppNormShortLog4.moveBy(moveOppDistanceXNorm,0,0);
+			for(var i = 0; i < rivers.length; i++) {
+				rivers[i].move();
 			}
 
 			// collision detection

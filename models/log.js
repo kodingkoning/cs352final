@@ -1,5 +1,5 @@
 class Log {
-  constructor(scene, movement, length, x, y, z) {
+  constructor(scene, length, x, y, z, minX, maxX) {
     this.scene = scene;
 
     // TODO: create log model
@@ -10,8 +10,10 @@ class Log {
     this.xpos = x;
     this.ypos = y;
     this.zpos = z;
-    this.mesh.movement = movement;
     scene.add(this.mesh);
+
+    this.minX = minX;
+    this.maxX = maxX;
   }
 
   moveBy(x, y, z) {
@@ -23,6 +25,16 @@ class Log {
     this.ypos = this.mesh.position.y;
     this.zpos = this.mesh.position.z;
     // TODO: animate movement
+  }
+
+  moveX(x) {
+    if(this.mesh.position.x < this.minX) {
+      this.mesh.position.x = 1000;
+    }
+    if(this.mesh.position.x > this.maxX) {
+      this.mesh.position.x = -1000;
+    }
+    this.mesh.translateX(x);
   }
 
   setLocation(x, y, z) {

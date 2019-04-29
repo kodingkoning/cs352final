@@ -1,7 +1,7 @@
 // model from: https://sketchfab.com/3d-models/handpainted-truck-124392d37fd047aea2c5cf61f9dd7750
 // Available under the Create Commons license. No modifications made.
 class Car {
-  constructor(scene, length, x, y, z) {
+  constructor(scene, length, x, y, z, minX, maxX) {
     this.scene = scene;
     this.action = null; // for list of animations from the gltf model
 
@@ -27,6 +27,8 @@ class Car {
     this.xpos = x;
     this.ypos = y;
     this.zpos = z;
+    this.minX = minX;
+    this.maxX = maxX;
     scene.add(this.mesh);
   }
 
@@ -40,6 +42,16 @@ class Car {
     this.zpos = this.mesh.position.z;
 
     // TODO: animate movement
+  }
+
+  moveX(x) {
+    if(this.mesh.position.x < this.minX) {
+      this.mesh.position.x = 1000;
+    }
+    if(this.mesh.position.x > this.maxX) {
+      this.mesh.position.x = -1000;
+    }
+    this.mesh.translateX(x);
   }
 
   setLocation(x, y, z) {
