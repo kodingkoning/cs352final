@@ -12,7 +12,6 @@ class Car {
       // truck
       var geo = new THREE.BoxGeometry(length, 50, 50);
       var mat = new THREE.MeshBasicMaterial();
-      //mat.visible = false;
       this.mesh = new THREE.Mesh(geo, mat);
       var scale_num = 0.054;
       var offset = [50, 3, 0];
