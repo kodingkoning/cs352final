@@ -7,7 +7,7 @@ class Frog {
 
     // frog model is a child of this mesh. It moves with the mesh.
     // fix to make frog mobile from: https://discourse.threejs.org/t/how-to-move-car-obj-file-on-map-solved/1173
-    var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+    var geometry = new THREE.BoxGeometry( 20, 60, 20 );
     var material = new THREE.MeshBasicMaterial();
     this.mesh = new THREE.Mesh( geometry, material );
     scene.add( this.mesh );
@@ -17,6 +17,7 @@ class Frog {
     var scale = [1, 1, 1];
     var rotation = [0, 0, 0];
     load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
+    // material.visible = false;
     this.setLocation(x, y, z);
     this.xpos = this.mesh.position.x;
     this.ypos = this.mesh.position.y;
@@ -42,11 +43,31 @@ class Frog {
     this.zpos = this.mesh.position.z;
   }
 
-  setRotation(angle) {
-    // rotates around the center of the frog
-    this.mesh.rotation.y = angle;
+  setY(y) {
+    this.mesh.position.set(this.mesh.position.x, y, this.mesh.position.z);
+    this.ypos = y;
   }
 
-  // TODO: add collision detection
+  setRotation(angle) {
+    // rotates around the center of the frog
+    this.mesh.rotation.z = angle;
+  }
+
+  // sets the vertical coordinate of the frog in relation to the mesh
+  jump(height) {
+    var angle = 0;
+    if( isNaN(height) ) {
+      // treat it as an object with a position
+      var z = height.position.z - this.zpos;
+      height = Math.sqrt(19*19 - z*z);
+      angle = Math.atan(height, z);
+    }
+    var children = this.mesh.children;
+    for(var i = 0; i < children.length; i++) {
+      if(children[i].type == "Scene") {
+        this.mesh.children[i].position.y = height;
+      }
+    }
+  }
 
 } // end Frog class

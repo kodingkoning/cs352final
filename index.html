@@ -10,9 +10,10 @@
 	</head>
 	<body>
 		<script src="js/three.js"></script>
-		<!-- <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script> -->
+		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 		<script src="https://stemkoski.github.io/Three.js/js/THREEx.KeyboardState.js"></script>
-		<script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+		<script src="js/threejs/GLTFLoader.js"></script>
+		<script src="js/threejs/ColladaLoader.js"></script>
 		<script src="js/helper.js"></script>
 		<script src="models/car.js"></script>
 		<script src="models/border.js"></script>
@@ -89,6 +90,11 @@
 			mesh.rotation.x = - Math.PI / 2;
 			mesh.receiveShadow = true;
 			scene.add( mesh );
+
+			loader.onLoad = function() {
+				// todo
+				frog.mesh.material.visible = false;
+			}
 
 			// add objects
 			frog = new Frog(scene, 0, 1.1, 0); // y = 1.1 so origin of collision ray is not inside mesh
@@ -187,8 +193,11 @@
 				if ( logResults.length > 0 && logResults[0].distance < directionVector.length() ) {
 					logColl = true;
 					movement = logResults[0].object.movement;
+					// frog.jump(18);
+					frog.jump(logResults[0].object);
 				} else {
 					movement = 0;
+					frog.jump(0);
 				}
 			}
 			if (!logColl && frog.zpos > 525 && frog.zpos < 775) {
