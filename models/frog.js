@@ -67,6 +67,7 @@ class Frog {
         height = 0;
       }
     }
+
     var children = this.mesh.children;
     for(var i = 0; i < children.length; i++) {
       if(children[i].type == "Scene") {
