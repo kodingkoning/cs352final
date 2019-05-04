@@ -193,7 +193,6 @@
 				if ( logResults.length > 0 && logResults[0].distance < directionVector.length() ) {
 					logColl = true;
 					movement = logResults[0].object.movement;
-					// frog.jump(18);
 					frog.jump(logResults[0].object);
 				} else {
 					movement = 0;

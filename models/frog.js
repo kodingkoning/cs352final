@@ -17,7 +17,6 @@ class Frog {
     var scale = [1, 1, 1];
     var rotation = [0, 0, 0];
     load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
-    // material.visible = false;
     this.setLocation(x, y, z);
     this.xpos = this.mesh.position.x;
     this.ypos = this.mesh.position.y;
@@ -59,8 +58,14 @@ class Frog {
     if( isNaN(height) ) {
       // treat it as an object with a position
       var z = height.position.z - this.zpos;
-      height = Math.sqrt(19*19 - z*z);
+      height = Math.sqrt(18*18 - z*z) + 2;
       angle = Math.atan(height, z);
+      if(isNaN(angle)) {
+        angle = 0;
+      }
+      if(isNaN(height)) {
+        height = 0;
+      }
     }
     var children = this.mesh.children;
     for(var i = 0; i < children.length; i++) {

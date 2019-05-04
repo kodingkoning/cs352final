@@ -37,6 +37,6 @@ load_collada = function(url, parent, offset, scale, rotation) {
     collada.scene.rotation.set(rotation[0], rotation[1], rotation[2]);
     scene.add(collada.scene);
     parent.add(collada.scene);
-    // parent.material.visible = false; //TODO: activate
+    parent.material.visible = false;
   });
 }

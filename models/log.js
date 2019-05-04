@@ -2,7 +2,6 @@ class Log {
   constructor(scene, length, x, y, z, minX, maxX, speed) {
     this.scene = scene;
 
-    // TODO: create log model
     var geo = new THREE.BoxGeometry(length, 50, 50);
     var mat = new THREE.MeshLambertMaterial( { color: 0x654321 } );
     this.mesh = new THREE.Mesh(geo, mat);
@@ -19,10 +18,8 @@ class Log {
     var offset = [0, 20, 0];
     var scale = [length_scale*scale_num, scale_num, scale_num]; //TODO: scale properly
     var rotation = [-Math.PI/2, 0, 0];
+    // Use custom made log model
     load_collada('models/collada/Log.dae', this.mesh, offset, scale, rotation);
-    // this.mesh.material.visible = false;
-
-    // TODO: make frog move on top of log
 
     this.minX = minX;
     this.maxX = maxX;
