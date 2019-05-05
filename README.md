@@ -11,10 +11,9 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 - implement game design
 	- model characters
 		- cars
-		- logs/floating elements
 		- goal elements
 	- create setting
-		- background (skybox)
+		- background (skybox) - in progress by Elizabeth
 		- water texture
 		- other textures
 - implement game mechanics
@@ -22,8 +21,6 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 
 ### Assignment requirements to fulfill
 
-- Gray box version
-- Custom modeling/texture mapping of something
 - Three of the listed features:
 	- Skybox or environment map
 	- Animated character
@@ -34,7 +31,10 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 ### Assignment requirements that are fulfilled
 
 - Initial game specification
+- Gray box version
 - Game that compiles and runs
 - Listed features (2/4):
 	- Camera and object motion
 	- Collision Detection
+- Custom modeling/texture mapping of something
+	- Logs are custom modeled in SketchUp
