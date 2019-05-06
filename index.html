@@ -14,7 +14,7 @@
 		<script src="https://stemkoski.github.io/Three.js/js/THREEx.KeyboardState.js"></script>
 		<script src="js/threejs/GLTFLoader.js"></script>
 		<script src="js/threejs/ColladaLoader.js"></script>
-		<script src="js/threejs/CubeTextureLoader.js"></script>
+		<!-- <script src="js/threejs/CubeTextureLoader.js"></script> -->
 		<!-- <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/src/loaders/CubeTextureLoader.js"></script> -->
 		<script src="js/helper.js"></script>
 		<script src="models/car.js"></script>
@@ -81,36 +81,27 @@
 			scene.add( light );
 
 			// skybox
-			// images from https://opengameart.org/content/sky-box-sunny-day
-			// var materialArray = [];
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Right.bmp') }));
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Left.bmp') }));
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Top.bmp') }));
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Bottom.bmp') }));
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Front.bmp') }));
-			// materialArray.push(new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( 'images/Daylight BoxPieces/Daylight Box_Back.bmp') }));
-			// var skyboxGeom = new THREE.CubeGeometry( 500, 500, 500, 1, 1, 1, materialArray);
-			// var skybox = new THREE.Mesh( skyboxGeom, materialArray );
+			var skybox = true;
+			if (skybox) {
+				// images from https://stemkoski.github.io/Three.js/Skybox.html
+				var imagePrefix = "images/dawn/dawnmountain-";
+				var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
 
-			var urlPrefix = "images/Daylight BoxPieces/Daylight Box_";
-			var urlSuffixes = ["Right", "Left", "Top", "Bottom", "Front", "Back"];
-			var urlType = ".bmp";
-			var urls = [];
-			for(var i = 0; i < urlSuffixes.length; i++) {
-				urls.push(urlPrefix + urlSuffixes[i] + urlType);
+				var imageSuffix = ".png";
+				var skyGeometry = new THREE.CubeGeometry( 2000, 2000, 2000 );
+				var materialArray = [];
+				for(var i = 0; i < directions.length; i++) {
+					materialArray.push( new THREE.MeshBasicMaterial({
+						map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+						side: THREE.BackSide
+					}));
+				}
+
+				var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+				var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+				scene.add( skyBox );
 			}
-			var textureCube = THREE.CubeTextureLoader().load( urls );
-			var shader = THREE.ShaderUtils.lib["cube"];
-			var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
-			uniforms['tCube'].texture= textureCube;   // textureCube has been init before
-			var material = new THREE.MeshShaderMaterial({
-			    fragmentShader    : shader.fragmentShader,
-			    vertexShader  : shader.vertexShader,
-			    uniforms  : uniforms
-			});
-			skybox = new THREE.Mesh( new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1, null, true), material);
-			// skybox.flipSided = true;
-			scene.add( skybox );
+
 
 			// ground
 			var loader = new THREE.TextureLoader();
@@ -169,10 +160,10 @@
 
 			// consider adding controls back in if the camera can still follow the frog well
 			// controls
-			var controls = new THREE.OrbitControls( camera, renderer.domElement );
-			controls.maxPolarAngle = Math.PI * 0.497;
-			controls.minDistance = 500;
-			controls.maxDistance = 5000;
+			// var controls = new THREE.OrbitControls( camera, renderer.domElement );
+			// controls.maxPolarAngle = Math.PI * 0.497;
+			// controls.minDistance = 500;
+			// controls.maxDistance = 5000;
 
 			window.addEventListener( 'resize', onWindowResize, false );
 		}
