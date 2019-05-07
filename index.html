@@ -24,6 +24,7 @@
 		<script src="models/hedge.js"></script>
 		<script src="models/road.js"></script>
 		<script src="models/river.js"></script>
+		<script src="models/finish.js"></script>
 		<script>
 
 		// initial background from example at https://threejs.org/examples/#webgl_animation_cloth
@@ -36,6 +37,7 @@
 		// objects for scene
 		var frog;
 		var roads;
+		var finish;
 		var slowLog1, slowLog2, slowLog3, slowLog4;
 		var oppNormLog1, oppNormLog2, oppNormLog3;
 		var fastLog1, fastLog2;
@@ -47,6 +49,9 @@
 		var moveOppDistanceXFast = -moveDistanceXFast;
 		var carList = [];
 		var logList = [];
+		var finishList = [];
+		var completedFinish = [];
+		var frogFin = [];
 		var movement = 0;
 
 		function init() {
@@ -154,6 +159,20 @@
 				}
 			}
 
+			finish = [];
+			finish.push( new Finish(scene, 0, -24, 875) );
+			finish.push( new Finish(scene, 220, -24, 875) );
+			finish.push( new Finish(scene, 440, -24, 875) );
+			finish.push( new Finish(scene, 660, -24, 875) );
+			finish.push( new Finish(scene, -220, -24, 875) );
+			finish.push( new Finish(scene, -440, -24, 875) );
+			finish.push( new Finish(scene, -660, -24, 875) );
+
+			// populate finishList for collision detection
+			for(var i = 0; i < finish.length; i++) {
+				finishList.push(finish[i].mesh);
+			}
+
 			// the edge of the hedge is narrower than the movement so that they appear more smoothly
 			var hedge = new Hedge(scene, -900, -1000, 900, 1000, 60, 60);
 			// TODO: add collision detection with stopping at the hedge
@@ -223,7 +242,24 @@
 					movement = 0;
 					frog.jump(0);
 				}
+
+				var finishResults = ray.intersectObjects( finishList );
+				if ( finishResults.length > 0 && finishResults[0].distance < directionVector.length() ) {
+					if ( completedFinish.indexOf(finishResults[0].object.xpos) == -1 ) {
+						completedFinish.push( finishResults[0].object.xpos );
+						frogFin.push( new Frog(scene, finishResults[0].object.xpos, 1.1, finishResults[0].object.zpos) );
+						frog.setLocation(0, 1.1, 0);
+					}
+				}
 			}
+
+			if (frogFin.length >= 7) {
+				for( i = 0; i < frogFin.length; i++ ) {
+					scene.remove(frogFin[i].mesh);
+				}
+				frogFin = [];
+			}
+
 			if (!logColl && frog.zpos > 525 && frog.zpos < 775) {
 				frog.setLocation(0, 1.1, 0);
 			} else if (logColl && frog.zpos > 525 && frog.zpos < 775) {
