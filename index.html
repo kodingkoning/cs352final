@@ -122,6 +122,34 @@
 			mesh.receiveShadow = true;
 			scene.add( mesh );
 
+			// road
+			var loader = new THREE.TextureLoader();
+			var groundTexture = loader.load( 'images/road1.jpg' );
+			groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+			groundTexture.repeat.set( 25, 1 );
+			groundTexture.anisotropy = 16;
+			var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+			var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 350 ), groundMaterial );
+			mesh.position.y = 0.5;
+			mesh.position.z = 225;
+			mesh.rotation.x = - Math.PI / 2;
+			mesh.receiveShadow = true;
+			scene.add( mesh );
+
+			// river
+			var loader = new THREE.TextureLoader();
+			var groundTexture = loader.load( 'images/water1.jpg' );
+			groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+			groundTexture.repeat.set( 50, 1 );
+			groundTexture.anisotropy = 16;
+			var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+			var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 252 ), groundMaterial );
+			mesh.position.y = 0.5;
+			mesh.position.z = 650;
+			mesh.rotation.x = - Math.PI / 2;
+			mesh.receiveShadow = true;
+			scene.add( mesh );
+
 			loader.onLoad = function() {
 				// todo
 				frog.mesh.material.visible = false;

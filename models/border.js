@@ -4,8 +4,14 @@ class Border {
 
     // TODO: create shrub/grass model
     // idea - make them varying images
-    var geo = new THREE.BoxBufferGeometry(50, 400, 50);
-    var mat = new THREE.MeshLambertMaterial( { color: 0x0B6623 } );
+    var loader = new THREE.TextureLoader();
+    var ivyTexture = loader.load( 'images/ivy1.jpg' );
+    ivyTexture.wrapS = ivyTexture.wrapT = THREE.RepeatWrapping;
+    ivyTexture.repeat.set( 0.6, 1 );
+    ivyTexture.anisotropy = 16;
+
+    var geo = new THREE.BoxBufferGeometry(70, 400, 50);
+    var mat = new THREE.MeshLambertMaterial( { map: ivyTexture } );
     this.mesh = new THREE.Mesh(geo, mat);
     this.setLocation(x, y, z);
     if (this.mesh.position.x == maxX) {
