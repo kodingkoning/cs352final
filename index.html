@@ -50,6 +50,7 @@
 		var carList = [];
 		var logList = [];
 		var finishList = [];
+		var hedgeList = [];
 		var completedFinish = [];
 		var frogFin = [];
 		var movement = 0;
@@ -174,7 +175,7 @@
 			}
 
 			// the edge of the hedge is narrower than the movement so that they appear more smoothly
-			var hedge = new Hedge(scene, -900, -1000, 900, 1000, 60, 60);
+			var hedge = new Hedge(scene, -900, -1000, 900, 1000, 60, 60, hedgeList);
 			// TODO: add collision detection with stopping at the hedge
 
 			// consider adding controls back in if the camera can still follow the frog well
@@ -197,18 +198,6 @@
 			requestAnimationFrame( animate );
 			renderer.render( scene, camera );
 
-			// keyboard controls adapted from example at: https://stemkoski.github.io/Three.js/Collision-Detection.html
-			// frog movement for testing purposes
-			var delta = clock.getDelta();
-			var moveDistance = 200 * delta;
-			if( keyboard.pressed("up") )
-				frog.moveBy(0, 0, moveDistance);
-			if( keyboard.pressed("down") )
-				frog.moveBy(0, 0, -moveDistance);
-			if( keyboard.pressed("left") )
-				frog.moveBy(moveDistance, 0, 0);
-			if( keyboard.pressed("right") )
-				frog.moveBy(-moveDistance, 0, 0);
 			// make camera follow frog
 			frog.mesh.add(camera);
 
@@ -223,6 +212,7 @@
 			// collision detection
 			var originPoint = frog.mesh.position.clone();
 			var logColl = false;
+			var hedgeHit = false;
 			for (var vertexIndex = 0; vertexIndex < frog.mesh.geometry.vertices.length; vertexIndex++) {
 				var localVertex = frog.mesh.geometry.vertices[vertexIndex].clone();
 				var globalVertex = localVertex.applyMatrix4( frog.mesh.matrix );
@@ -251,6 +241,20 @@
 						frog.setLocation(0, 1.1, 0);
 					}
 				}
+
+				var hedgeResults = ray.intersectObjects( hedgeList );
+				if ( hedgeResults.length > 0 && hedgeResults[0].distance < directionVector.length() ) {
+					hedgeHit = true;
+					if (hedgeResults[0].object.side == "Right") {
+						frog.moveBy(-0.1,0,0);
+					} else if (hedgeResults[0].object.side == "Left") {
+						frog.moveBy(0.1,0,0);
+					} else if (hedgeResults[0].object.side == "Up") {
+						frog.moveBy(0,0,-0.1);
+					} else if (hedgeResults[0].object.side == "Down") {
+						frog.moveBy(0,0,0.1);
+					}
+				}
 			}
 
 			if (frogFin.length >= 7) {
@@ -262,8 +266,23 @@
 
 			if (!logColl && frog.zpos > 525 && frog.zpos < 775) {
 				frog.setLocation(0, 1.1, 0);
-			} else if (logColl && frog.zpos > 525 && frog.zpos < 775) {
+			} else if (logColl && frog.zpos > 525 && frog.zpos < 775 && !hedgeHit) {
 		 		frog.moveBy(movement, 0, 0);
+			}
+
+			// keyboard controls adapted from example at: https://stemkoski.github.io/Three.js/Collision-Detection.html
+			// frog movement for testing purposes
+			var delta = clock.getDelta();
+			var moveDistance = 200 * delta;
+			if (!hedgeHit) {
+				if( keyboard.pressed("up") )
+					frog.moveBy(0, 0, moveDistance);
+				if( keyboard.pressed("down") )
+					frog.moveBy(0, 0, -moveDistance);
+				if( keyboard.pressed("left") )
+					frog.moveBy(moveDistance, 0, 0);
+				if( keyboard.pressed("right") )
+					frog.moveBy(-moveDistance, 0, 0);
 			}
 		};
 
