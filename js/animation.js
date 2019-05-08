@@ -4,20 +4,32 @@
 // meshes, armatures and animations to use. We will load the whole scene for each object and clone it for each unit.
 // Models are from https://www.mixamo.com/
 var MODELS = [
-  { name: "Parrot" },
-  // { name: "" },
+  // { name: "Parrot",
+  //   fileType: ".glb"
+  // },
+  { name: "Truck",
+    fileType: ".glb"
+  },
 ];
 // Here we define instances of the models that we want to place in the scene, their position, scale and the animations
 // that must be played.
 var UNITS = [
+  // {
+  //   modelName: "Parrot",
+  //   meshName: "mesh_0",
+  //   position: { x: 0, y: 0, z: 0 },
+  //   rotation: { x: 0, y: Math.PI, z: 0 },
+  //   scale: 1,
+  //   animationName: "parrot_A_"
+  // },
   {
-    modelName: "Parrot",
-    meshName: "mesh_0",
-    position: { x: 0, y: 0, z: 0 },
-    rotation: { x: 0, y: Math.PI, z: 0 },
-    scale: 1,
-    animationName: "parrot_A_"
-  },
+    modelName: "Truck",
+    meshName: "RootNode_(gltf_orientation_matrix)",
+    position: { x: 10, y: 0, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: 0.1,
+    animationName: "CINEMA_4D_Main"
+  }
 ];
 
 /**
@@ -118,7 +130,7 @@ function getModelByName( name ) {
  */
 function loadGltfModel( model, onLoaded ) {
   var loader = new THREE.GLTFLoader();
-  var modelName = "models/gltf/" + model.name + ".glb";
+  var modelName = "models/gltf/" + model.name + model.fileType;
   loader.load( modelName, function ( gltf ) {
     var scene = gltf.scene;
     model.animations = gltf.animations;
