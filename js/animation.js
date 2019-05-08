@@ -5,6 +5,7 @@
 // Models are from https://www.mixamo.com/
 var MODELS = [
   { name: "Parrot" },
+  // { name: "" },
 ];
 // Here we define instances of the models that we want to place in the scene, their position, scale and the animations
 // that must be played.
@@ -12,11 +13,11 @@ var UNITS = [
   {
     modelName: "Parrot",
     meshName: "mesh_0",
-    position: { x: - 4, y: 0, z: 0 },
+    position: { x: 0, y: 0, z: 0 },
     rotation: { x: 0, y: Math.PI, z: 0 },
-    scale: 0.01,
+    scale: 1,
     animationName: "parrot_A_"
-  }
+  },
 ];
 
 /**
