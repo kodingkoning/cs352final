@@ -22,7 +22,6 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 ### Assignment requirements to fulfill
 
 - Three of the listed features:
-	- Skybox or environment map
 	- Animated character
 	- Picking
 - complexity, attractiveness and playability
@@ -33,8 +32,9 @@ Our project will be a 3D implementation of Frogger written with three.js. The ga
 - Initial game specification
 - Gray box version
 - Game that compiles and runs
-- Listed features (2/4):
+- Listed features (3/4):
 	- Camera and object motion
 	- Collision Detection
+	- Skybox or environment map
 - Custom modeling/texture mapping of something
 	- Logs are custom modeled in SketchUp

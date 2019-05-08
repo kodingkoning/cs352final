@@ -2,6 +2,9 @@ class Frog {
   // model from: https://sketchfab.com/3d-models/poison-dart-frog-97142ccef8c74650b34e0547b2812c2b
   // Available under the CC License. No changes made.
 
+  // animated model from: https://sketchfab.com/3d-models/sapo-frog-1f00e806fac94d36883ba73528f85a11
+  // Available under the CC License. No changes made.
+
   constructor(scene, x, y, z) {
     this.scene = scene;
 
@@ -14,9 +17,14 @@ class Frog {
     this.mesh.rotateY(Math.PI); // make frog face forwards
 
     var offset = [-43, 0, 255];
-    var scale = [1, 1, 1];
+    var scale = [5, 5, 5];
     var rotation = [0, 0, 0];
-    load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
+    // load_example('models/gltf/animated_frog/scene.gltf', this.mesh, offset, scale, rotation, true);
+    load_example('models/gltf/Parrot.glb', this.mesh, offset, scale, rotation, true);
+    // var offset = [-43, 0, 255];
+    // var scale = [1, 1, 1];
+    // var rotation = [0, 0, 0];
+    // load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
     this.setLocation(x, y, z);
     this.xpos = this.mesh.position.x;
     this.ypos = this.mesh.position.y;
