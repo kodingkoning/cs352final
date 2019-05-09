@@ -8,8 +8,38 @@ class Car {
 
     // TODO: create car model for all lengths of cars (possibly specify in constructor)
 
-    if (length == 100) {
-      // truck
+    if (length == 50) {
+      var rand = Math.random();
+      if(rand > 0.5) {
+        // model from: https://sketchfab.com/3d-models/car-2019-21067530b93c465fbc7765a717933c4f
+        // Available under the Create Commons license. No modifications made.
+        var geo = new THREE.BoxGeometry(length, 50, 50);
+        var mat = new THREE.MeshBasicMaterial();
+        this.mesh = new THREE.Mesh(geo, mat);
+        var offset = [0, 0, 0];
+        var scale = [20, 20, 20];
+        var rotation = [0, Math.PI/2, 0];
+        if (speed < 0) {
+          rotation[1] = 3*Math.PI/2;
+        }
+        load_example('models/gltf/car_2019/scene.gltf', this.mesh, offset, scale, rotation);
+      } else {
+        // model from: https://sketchfab.com/3d-models/car-dfe73f34fd304cdf8e3b0b6fa6ab66b3
+        // Available under the Create Commons license. No modifications made.
+        var geo = new THREE.BoxGeometry(length, 50, 50);
+        var mat = new THREE.MeshBasicMaterial();
+        this.mesh = new THREE.Mesh(geo, mat);
+        var offset = [0, 0, 0];
+        var scale = [0.4, 0.4, 0.4];
+        var rotation = [0, Math.PI/2, 0];
+        if (speed < 0) {
+          rotation[1] = 3*Math.PI/2;
+        }
+        load_example('models/gltf/car2/scene.gltf', this.mesh, offset, scale, rotation);
+      }
+
+    } else if (length == 100) {
+      // animated truck
       var geo = new THREE.BoxGeometry(length, 50, 50);
       var mat = new THREE.MeshBasicMaterial();
       this.mesh = new THREE.Mesh(geo, mat);
