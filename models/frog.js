@@ -24,7 +24,7 @@ class Frog {
     var scale = [1, 1, 1];
     var rotation = [0, 0, 0];
     // load_example('models/gltf/animated_frog/scene.gltf', this.mesh, offset, scale, rotation, true);
-    load_example('models/gltf/Parrot.glb', this.mesh, offset, scale, rotation, true);
+    // load_example('models/gltf/Parrot.glb', this.mesh, offset, scale, rotation, true);
     // var offset = [-43, 0, 255];
     // var scale = [1, 1, 1];
     // var rotation = [0, 0, 0];
