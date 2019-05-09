@@ -17,10 +17,10 @@ class Car {
       var coords = {};
       var rot = {};
       if(speed < 0) {
-        coords = { x: -50, y: 5, z: 0 };
+        coords = { x: -50, y: 3, z: 0 };
         rot = { x: 0, y: 3*Math.PI/2, z: 0 };
       } else {
-        coords = { x: 50, y: 5, z: 0 };
+        coords = { x: 50, y: 3, z: 0 };
         rot = { x: 0, y: Math.PI/2, z: 0 };
       }
       this.loadTruck( coords , rot, this.mesh );

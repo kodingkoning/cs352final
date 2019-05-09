@@ -28,7 +28,7 @@ class Frog {
     // var offset = [-43, 0, 255];
     // var scale = [1, 1, 1];
     // var rotation = [0, 0, 0];
-    // load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
+    load_example('models/gltf/poison_dart_frog/scene.gltf', this.mesh, offset, scale, rotation);
     this.setLocation(x, y, z);
     this.xpos = this.mesh.position.x;
     this.ypos = this.mesh.position.y;
