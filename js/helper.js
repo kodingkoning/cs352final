@@ -2,6 +2,7 @@ load_example = function(url, parent, offset, scale, rotation, act) {
   // loading adapted from example at: https://threejs.org/docs/#examples/loaders/GLTFLoader
   // Instantiate a loader
   var loader = new THREE.GLTFLoader();
+  var mixer;
 
   // Load a glTF resource
   loader.load(
@@ -17,16 +18,22 @@ load_example = function(url, parent, offset, scale, rotation, act) {
       parent.material.visible = false;
 
       // TODO: make animation work
-      // if (act) {
-      //   mixer = new THREE.AnimationMixer( gltf.scene );
-      //   // just looks at the first action
-      //   var action = mixer.clipAction(gltf.animations[0]);
-      //   action.setDuration(1);
-      //   var time = action.time;
-      //   action.play();
-      // }
+      if (act) {
+        parent.animations = gltf.animations;
+        mixer = new THREE.AnimationMixer( gltf.scene );
+        // just looks at the first action
+        var action = mixer.clipAction(gltf.animations[0]);
+        // action.setDuration(1);
+        var time = action.time;
+        var mixer_type = mixer.constructor.name;
+        var type = action.constructor.name;
+        // action.reset();
+        action.play();
+      }
     }
   );
+
+  return mixer;
 }
 
 load_collada = function(url, parent, offset, scale, rotation) {
@@ -40,3 +47,15 @@ load_collada = function(url, parent, offset, scale, rotation) {
     parent.material.visible = false;
   });
 }
+
+// startAnimation = function( mesh, animations, animationIdx ) {
+//   var mixer = new THREE.AnimationMixer( mesh );
+//   var clip = animations[animationIdx];
+//
+//   if( clip ) {
+//     var action = mixer.clipAction(clip);
+//     action.play();
+//   }
+//
+//   return mixer;
+// }
