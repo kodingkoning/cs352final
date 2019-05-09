@@ -13,16 +13,17 @@ class Car {
       var geo = new THREE.BoxGeometry(length, 50, 50);
       var mat = new THREE.MeshBasicMaterial();
       this.mesh = new THREE.Mesh(geo, mat);
-      var scale_num = 0.054;
-      if (speed < 0) {
-        var offset = [-50, 3, 0];
+
+      var coords = {};
+      var rot = {};
+      if(speed < 0) {
+        coords = { x: -50, y: 5, z: 0 };
+        rot = { x: 0, y: 3*Math.PI/2, z: 0 };
       } else {
-        var offset = [50, 3, 0];
+        coords = { x: 50, y: 5, z: 0 };
+        rot = { x: 0, y: Math.PI/2, z: 0 };
       }
-      var scale = [scale_num, scale_num, scale_num];
-      var rotation = [0, Math.PI/2, 0];
-      if(speed < 0) { rotation[1] = 3*Math.PI/2; }
-      load_example('models/gltf/handpainted_truck/scene.gltf', this.mesh, offset, scale, rotation, true);
+      this.loadTruck( coords , rot, this.mesh );
     } else {
       // often of length 50
       var geo = new THREE.BoxGeometry(length, 50, 50);
@@ -37,6 +38,24 @@ class Car {
     this.minX = minX;
     this.maxX = maxX;
     scene.add(this.mesh);
+  }
+
+  loadTruck(pos, rot, mesh) {
+    // TODO: load truck
+    var unit =   {
+        modelName: "Truck",
+        meshName: "RootNode_(gltf_orientation_matrix)",
+        position: pos,
+        rotation: rot,
+        scale: 0.059,
+        animationName: "CINEMA_4D_Main"
+      };
+    var model = {
+      name: "Truck",
+      fileType: ".glb"
+    };
+    loadModel(model, unit, mesh);
+    // instantiateUnit(unit, model);
   }
 
   moveBy(x, y, z) {
